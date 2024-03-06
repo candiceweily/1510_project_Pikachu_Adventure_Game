@@ -6,12 +6,15 @@ This is written in markdown. Read about markdown here: [markdowncheatsheet](http
 
 ## Your name:
 Candice Wei
+Melissa Shao
 
 ## Your student number:
 Candice: A01386061
+Melissa: A01386861
 
 ## Your GitHub name:
 Candice: candiceweily
+Melissa: Melissa-Shao
 
 ## Any important comments you'd like to make about your work:
-Replace this line (and add more if you like!) with any comments you have
+Work hard for the team project!
