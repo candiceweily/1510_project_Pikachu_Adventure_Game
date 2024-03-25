@@ -80,11 +80,35 @@ def move_character(character: dict, direction: str) -> None:
 
 
 def encounter_foe(character: dict) -> bool:
+    encounter_chance = random.randint(1, 10)
+    if encounter_chance > 5:
+        foe_name = FOE_NAMES[character["Level"] - 1]
+        print(f"You encountered a {foe_name}!")
+        win_chance = WIN_CHANCE_BY_LEVEL[character["Level"] - 1]
+        xp_change = XP_CHANGE_BY_LEVEL[character["Level"] - 1]
+        hp_change = HP_CHANGE_BY_LEVEL[character["Level"] - 1]
+        if random.random() < win_chance:
+            print(f"You won the battle! XP + {xp_change}, HP + {hp_change}")
+            character["XP"] += xp_change
+            character["Current HP"] = min(character["Current HP"] + hp_change, character["Max HP"])
+        else:
+            print(f"You lost the battle. HP - {hp_change}")
+            character["Current HP"] -= hp_change
+            if character["Current HP"] <= 0:
+                return False
+    else:
+        print("No foes encountered this time.")
     return True
 
 
 def check_level_up(character: dict) -> None:
-    return None
+    level = character["Level"]
+    if level < 3 and character["XP"] >= LEVEL_UP_EXPERIENCE[level - 1]:
+        character["Level"] += 1
+        character["Max HP"] = MAX_HP_BY_LEVEL[level]
+        character["Current HP"] = character["Max HP"]
+        character["Ability"] = ABILITY_BY_LEVEL[level]
+        print(f'Pikachu has leveled up to Level {level + 1}! Ability upgrades to {character["Ability"]}.')
 
 
 def final_boss_battle(character: dict) -> bool:
