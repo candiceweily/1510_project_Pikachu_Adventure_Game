@@ -112,6 +112,24 @@ def check_level_up(character: dict) -> None:
 
 
 def final_boss_battle(character: dict) -> bool:
+    boss_hp = 50
+    print("The final boss battle begins!")
+    round_number = 0
+    while boss_hp > 0 and character["Current HP"] > 0:
+        round_number += 1
+        print(f"Round {round_number}:")
+        player_hit_chance = BOSS_BATTLE_HIT_CHANCE
+        if random.random() < player_hit_chance:
+            boss_hp -= BOSS_BATTLE_HP_REDUCE[0]
+            print(f"You hit the boss! Boss's HP is now {boss_hp}.")
+        else:
+            print("You missed!")
+        if boss_hp > 0:
+            character["Current HP"] -= BOSS_BATTLE_HP_REDUCE[1]  # Assuming each boss hit reduces a fixed amount of player's HP
+            print(f"The boss hit you! Your HP is now {character['Current HP']}.")
+        if character["Current HP"] <= 0:
+            print("Game Over. Pikachu has fainted.")
+            return False
     print("Congratulations! You've defeated the final boss and completed the game!")
     return True
 
