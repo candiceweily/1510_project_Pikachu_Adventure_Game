@@ -4,9 +4,13 @@ LEVEL_UP_EXPERIENCE = [5, 10]
 MAX_HP_BY_LEVEL = [20, 30, 50]
 ABILITY_BY_LEVEL = ["Thunder Shock", "Thunder Shower", "Thunder Storm"]
 FOE_NAMES = ["Junior foe", "Medium foe", "Senior foe"]
+GUESS_GAME_NAME = ["Easy guessing game", "Hard guessing game", "Insane guessing game"]
+GUESS_GAME_HP_CHANGE_BY_LEVEL = [1, 2, 3]
+GUESS_GAME_XP_CHANGE_BY_LEVEL = [1, 2, 3]
+GUESS_GAME_RANGE = [2, 3, 5]
 WIN_CHANCE_BY_LEVEL = [0.6, 0.7, 0.8]
-HP_CHANGE_BY_LEVEL = [1, 2, 3]
-XP_CHANGE_BY_LEVEL = [1, 2, 3]
+HP_CHANGE_BY_LEVEL = [2, 3, 4]
+XP_CHANGE_BY_LEVEL = [2, 3, 4]
 BOSS_BATTLE_XP_NEED = 15
 BOSS_BATTLE_HP_REDUCE = [10, 5]
 BOSS_BATTLE_HIT_CHANCE = 0.6
@@ -133,6 +137,35 @@ def encounter_foe(character: dict) -> bool:
             if character["Current HP"] <= 0:
                 print("Game Over. Pikachu has fainted.")
                 return False
+    elif encounter_chance < 3:
+        guess_name = GUESS_GAME_NAME[character["Level"] - 1]
+        print(f"You encountered a {guess_name}!")
+        guess_range = GUESS_GAME_RANGE[character["Level"] - 1]
+        random_number = random.randint(1, guess_range)
+        while True:
+            try:
+                print(f"There is a random number generated in [1 to {guess_range}]")
+                user_input = int(input("Please guess, what is the number: ").strip())
+            except ValueError:
+                print(f"Invalid input: Please enter a number.")
+            else:
+                if 1 <= user_input <= guess_range:
+                    print("You guessing:", user_input)
+                    xp_change = GUESS_GAME_XP_CHANGE_BY_LEVEL[character["Level"] - 1]
+                    hp_change = GUESS_GAME_HP_CHANGE_BY_LEVEL[character["Level"] - 1]
+                    if user_input == random_number:
+                        character["XP"] += xp_change
+                        character["Current HP"] = min(character["Current HP"] + hp_change, character["Max HP"])
+                        print(f"Your guessing is correct, {random_number}! XP + {xp_change}, HP + {hp_change}")
+                    else:
+                        character["Current HP"] -= hp_change
+                        print(f"Your guessing is wrong! Correct number is {random_number}. HP - {hp_change}")
+                        if character["Current HP"] <= 0:
+                            print("Game Over. Pikachu has fainted.")
+                            return False
+                    break
+                else:
+                    print(f"The number is not in the valid range [1 to {guess_range}]")
     else:
         print("No foes encountered this time.")
     return True
@@ -207,10 +240,11 @@ def game():
                 if ((character["X-coordinate"], character["Y-coordinate"]) == (ROWS - 1, COLUMNS - 1) and
                         successful_move):
                     if final_boss_battle(character):
-                        print("Congratulations! Pikachu completes the game!")
+                        # print("Congratulations! Pikachu completes the game!")
                         return
                     else:
                         print("Pikachu is beaten by final boss. Game over.")
+                        return
             else:
                 print("Move not possible. Choose a different direction or meet the requirements to face the boss.")
             check_level_up(character)
