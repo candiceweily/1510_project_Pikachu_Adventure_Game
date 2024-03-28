@@ -186,6 +186,23 @@ def check_level_up(character: dict) -> None:
         print(f'Pikachu has leveled up to Level {level + 1}! Ability upgrades to {character["Ability"]}.')
 
 
+def print_congratulations():
+    print("Congratulations! You've defeated the final boss and completed the game!")
+    print(r""" 
+               ___________
+              '._==_==_=_.'
+              .-\:      /-.
+             | (|:.     |) |
+              '-|:.     |-'
+                \::.    /
+                 '::. .'
+                   ) (
+                 _.' '._
+                `"""""""` 
+    """)
+    print("Pikachu is enjoying the triumph!")
+
+
 def final_boss_battle(character: dict) -> bool:
     boss_hp = 50
     print("The final boss battle begins!")
@@ -205,7 +222,7 @@ def final_boss_battle(character: dict) -> bool:
         if character["Current HP"] <= 0:
             print("Game Over. Pikachu has fainted.")
             return False
-    print("Congratulations! You've defeated the final boss and completed the game!")
+    print_congratulations()
     return True
 
 
