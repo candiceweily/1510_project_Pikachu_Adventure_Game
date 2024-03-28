@@ -118,11 +118,16 @@ def encounter_foe(character: dict) -> bool:
         foe_name = FOE_NAMES[character["Level"] - 1]
         print(f"You encountered a {foe_name}!")
         if character["Potions"] > 0:
+            print(f"Current HP: {character['Current HP']}")
             use_potion = input("Would you like to use a potion before the fight? (1-yes/2-no): ").strip()
             if use_potion == "1":
                 character["Current HP"] = min(character["Current HP"] + 5, character["Max HP"])
                 character["Potions"] -= 1
                 print(f"Potion used. Current HP: {character['Current HP']}. Potions left: {character['Potions']}.")
+            elif use_potion == "2":
+                print("You chose not to use a potion.")
+            else:
+                print("Invalid input. Please enter 1 or 2.")
 
         win_chance = WIN_CHANCE_BY_LEVEL[character["Level"] - 1]
         xp_change = XP_CHANGE_BY_LEVEL[character["Level"] - 1]
