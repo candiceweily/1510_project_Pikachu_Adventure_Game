@@ -228,18 +228,21 @@ def final_boss_battle(character: dict) -> bool:
 
 def game():
     print("Welcome to the adventure game!")
-    print("      \\:.             .:/")
-    print("       \\``._________.''/ ")
-    print("        \\             / ")
-    print(" .--.--, / .':.   .':. \\")
-    print("/__:  /  | '::' . '::' |")
-    print("   / /   |`.   ._.   .'|")
-    print("  / /    |.'         '.|")
-    print(" /___-_-,|.\\  \\   /  /.|")
-    print("      `==|:=         =:|")
-    print("         `.          .'")
-    print("           :-._____.-:")
-    print("          `''       `''")
+    print(r"""
+          \:.             .:/
+           \``._________.''/ 
+            \             / 
+     .--.--, / .':.   .':. \
+    /__:  /  | '::' . '::' |
+       / /   |`.   ._.   .'|
+      / /    |.'         '.|
+     /___-_-,|.\  \   /  /.|
+          `==|:=         =:|
+             `.          .'
+               :-._____-.:
+              `''       `'' 
+    """)
+
     board = make_board(ROWS, COLUMNS)
     character = make_character()
     display_map_with_character_position(character)
