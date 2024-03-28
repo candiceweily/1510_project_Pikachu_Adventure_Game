@@ -230,22 +230,14 @@ def game():
     while True:
         describe_current_location(board, character)
         direction = get_user_choice(character)
-
         if validate_move(character, direction):
-            successful_move = move_character(character, direction)
-
-            if successful_move:
+            if move_character(character, direction):
                 display_map_with_character_position(character)
-                fight_result = encounter_foe(character)
-
-                if not fight_result:
-                    print("Pikachu loses all HP. Game over.")
+                if not encounter_foe(character):
                     break
-
-                if ((character["X-coordinate"], character["Y-coordinate"]) == (ROWS - 1, COLUMNS - 1) and
-                        successful_move):
+                if (character["X-coordinate"], character["Y-coordinate"]) == (ROWS - 1, COLUMNS - 1):
                     if final_boss_battle(character):
-                        # print("Congratulations! Pikachu completes the game!")
+                        print("Congratulations! Pikachu completes the game!")
                         return
                     else:
                         print("Pikachu is beaten by final boss. Game over.")
