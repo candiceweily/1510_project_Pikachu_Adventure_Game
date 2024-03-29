@@ -187,7 +187,7 @@ def check_level_up(character: dict) -> None:
 
 
 def print_congratulations():
-    print("Congratulations! You've defeated the final boss and completed the game!")
+    print("You've defeated the final boss!")
     print(r""" 
                ___________
               '._==_==_=_.'
@@ -253,15 +253,17 @@ def game():
         if validate_move(character, direction):
             if move_character(character, direction):
                 display_map_with_character_position(character)
-                if not encounter_foe(character):
-                    break
-                if (character["X-coordinate"], character["Y-coordinate"]) == (ROWS - 1, COLUMNS - 1):
+                if (character["X-coordinate"], character["Y-coordinate"]) == (ROWS - 1, COLUMNS - 1) and character[
+                    "Level"] >= 3 and character["XP"] >= BOSS_BATTLE_XP_NEED:
                     if final_boss_battle(character):
                         print("Congratulations! Pikachu completes the game!")
                         return
                     else:
-                        print("Pikachu is beaten by final boss. Game over.")
+                        print("Pikachu is beaten by the final boss. Game over.")
                         return
+                else:
+                    if not encounter_foe(character):
+                        break
             else:
                 print("Move not possible. Choose a different direction or meet the requirements to face the boss.")
             check_level_up(character)
