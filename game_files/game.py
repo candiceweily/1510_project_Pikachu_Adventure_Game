@@ -1,20 +1,7 @@
 import random
-
-LEVEL_UP_EXPERIENCE = [5, 10]
-MAX_HP_BY_LEVEL = [20, 30, 50]
-ABILITY_BY_LEVEL = ["Thunder Shock", "Thunder Shower", "Thunder Storm"]
-FOE_NAMES = ["Junior foe", "Medium foe", "Senior foe"]
-GUESS_GAME_NAME = ["Easy guessing game", "Hard guessing game", "Insane guessing game"]
-GUESS_GAME_HP_CHANGE_BY_LEVEL = [1, 2, 3]
-GUESS_GAME_XP_CHANGE_BY_LEVEL = [1, 2, 3]
-GUESS_GAME_RANGE = [2, 3, 5]
-WIN_CHANCE_BY_LEVEL = [0.6, 0.7, 0.8]
-HP_CHANGE_BY_LEVEL = [2, 3, 4]
-XP_CHANGE_BY_LEVEL = [2, 3, 4]
-BOSS_BATTLE_XP_NEED = 15
-BOSS_BATTLE_HP_REDUCE = [10, 5]
-BOSS_BATTLE_HIT_CHANCE = 0.6
-ROWS, COLUMNS = 10, 10
+from game_files import ROWS, COLUMNS, LEVEL_UP_EXPERIENCE, MAX_HP_BY_LEVEL, ABILITY_BY_LEVEL, FOE_NAMES, WIN_CHANCE_BY_LEVEL
+from game_files import GUESS_GAME_NAME, GUESS_GAME_HP_CHANGE_BY_LEVEL, GUESS_GAME_XP_CHANGE_BY_LEVEL, GUESS_GAME_RANGE
+from game_files import HP_CHANGE_BY_LEVEL, XP_CHANGE_BY_LEVEL, BOSS_BATTLE_XP_NEED, BOSS_BATTLE_HP_REDUCE, BOSS_BATTLE_HIT_CHANCE
 
 
 def make_board(rows: int, columns: int) -> dict:
@@ -256,8 +243,7 @@ def game():
         if validate_move(character, direction):
             if move_character(character, direction):
                 display_map_with_character_position(character)
-                if (character["X-coordinate"], character["Y-coordinate"]) == (ROWS - 1, COLUMNS - 1) and character[
-                    "Level"] >= 3 and character["XP"] >= BOSS_BATTLE_XP_NEED:
+                if (character["X-coordinate"], character["Y-coordinate"]) == (ROWS - 1, COLUMNS - 1) and character["Level"] >= 3 and character["XP"] >= BOSS_BATTLE_XP_NEED:
                     if final_boss_battle(character):
                         print("Congratulations! Pikachu completes the game!")
                         return

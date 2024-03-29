@@ -1,0 +1,15 @@
+LEVEL_UP_EXPERIENCE = (5, 10)
+MAX_HP_BY_LEVEL = (20, 30, 50)
+ABILITY_BY_LEVEL = ("Thunder Shock", "Thunder Shower", "Thunder Storm")
+FOE_NAMES = ("Junior foe", "Medium foe", "Senior foe")
+GUESS_GAME_NAME = ("Easy guessing game", "Hard guessing game", "Insane guessing game")
+GUESS_GAME_HP_CHANGE_BY_LEVEL = (1, 2, 3)
+GUESS_GAME_XP_CHANGE_BY_LEVEL = (1, 2, 3)
+GUESS_GAME_RANGE = (2, 3, 5)
+WIN_CHANCE_BY_LEVEL = (0.6, 0.7, 0.8)
+HP_CHANGE_BY_LEVEL = (2, 3, 4)
+XP_CHANGE_BY_LEVEL = (2, 3, 4)
+BOSS_BATTLE_XP_NEED = 15
+BOSS_BATTLE_HP_REDUCE = (10, 5)
+BOSS_BATTLE_HIT_CHANCE = 0.6
+ROWS, COLUMNS = 10, 10
