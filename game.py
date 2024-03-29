@@ -36,6 +36,24 @@ def make_character() -> dict:
     }
 
 
+def display_welcome_message() -> None:
+    print("Welcome to Pikachu adventure game!")
+    print(r"""
+              \:.             .:/
+               \``._________.''/ 
+                \             / 
+         .--.--, / .':.   .':. \
+        /__:  /  | '::' . '::' |
+           / /   |`.   ._.   .'|
+          / /    |.'         '.|
+         /___-_-,|.\  \   /  /.|
+              `==|:=         =:|
+                 `.          .'
+                   :-._____-.:
+                  `''       `'' 
+    """)
+
+
 def describe_current_location(board: dict, character: dict) -> None:
     location = (character["X-coordinate"], character["Y-coordinate"])
     print(f'You are in {board[location]}, at location {location}.')
@@ -186,7 +204,7 @@ def check_level_up(character: dict) -> None:
         print(f'Pikachu has leveled up to Level {level + 1}! Ability upgrades to {character["Ability"]}.')
 
 
-def print_congratulations():
+def print_congratulations() -> None:
     print("You've defeated the final boss!")
     print(r""" 
                ___________
@@ -227,22 +245,7 @@ def final_boss_battle(character: dict) -> bool:
 
 
 def game():
-    print("Welcome to the adventure game!")
-    print(r"""
-          \:.             .:/
-           \``._________.''/ 
-            \             / 
-     .--.--, / .':.   .':. \
-    /__:  /  | '::' . '::' |
-       / /   |`.   ._.   .'|
-      / /    |.'         '.|
-     /___-_-,|.\  \   /  /.|
-          `==|:=         =:|
-             `.          .'
-               :-._____-.:
-              `''       `'' 
-    """)
-
+    display_welcome_message()
     board = make_board(ROWS, COLUMNS)
     character = make_character()
     display_map_with_character_position(character)
