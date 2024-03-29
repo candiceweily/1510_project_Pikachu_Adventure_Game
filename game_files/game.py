@@ -118,6 +118,10 @@ def move_character(character: dict, direction: str) -> bool:
 
 
 def encounter_foe(character: dict) -> bool:
+    current_x, current_y = character["X-coordinate"], character["Y-coordinate"]
+    if current_x == ROWS - 1 and current_y == COLUMNS - 1:
+        return True
+
     encounter_chance = random.randint(1, 10)
     if encounter_chance > 5:
         foe_name = FOE_NAMES[character["Level"] - 1]
