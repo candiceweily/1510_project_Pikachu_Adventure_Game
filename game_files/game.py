@@ -4,6 +4,26 @@ from game_files import GUESS_GAME_NAME, GUESS_GAME_HP_CHANGE_BY_LEVEL, GUESS_GAM
 from game_files import HP_CHANGE_BY_LEVEL, XP_CHANGE_BY_LEVEL, BOSS_BATTLE_XP_NEED, BOSS_BATTLE_HP_REDUCE, BOSS_BATTLE_HIT_CHANCE
 
 
+def menu():
+    while True:
+        print("\n--- Pikachu Adventure Game Menu ---")
+        print("1. Start Game")
+        print("2. Help")
+        print("3. Exit")
+        choice = input("Enter your choice (1, 2 or 3): ").strip()
+        if choice in ["1", "2", "3"]:
+            return choice
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
+
+
+def display_help():
+    print("\n--- Help & Information ---")
+    print("Welcome to Pikachu Adventure Game!")
+    print("Navigate Pikachu through various locations, battle foes, and level up.")
+    print("Make strategic decisions to ensure Pikachu's victory.")
+
+
 def make_board(rows: int, columns: int) -> dict:
     descriptions = ['Kanto', 'Johto', 'Hoenn', 'Sinnoh', 'Hisui']
     return {(row, col): random.choice(descriptions) for row in range(rows) for col in range(columns)}
@@ -233,32 +253,41 @@ def final_boss_battle(character: dict) -> bool:
 
 
 def game():
-    display_welcome_message()
-    board = make_board(ROWS, COLUMNS)
-    character = make_character()
-    display_map_with_character_position(character)
+    choice = menu()
 
-    while True:
-        describe_current_location(board, character)
-        direction = get_user_choice(character)
-        if validate_move(character, direction):
-            if move_character(character, direction):
-                display_map_with_character_position(character)
-                if (character["X-coordinate"], character["Y-coordinate"]) == (ROWS - 1, COLUMNS - 1) and character["Level"] >= 3 and character["XP"] >= BOSS_BATTLE_XP_NEED:
-                    if final_boss_battle(character):
-                        print("Congratulations! Pikachu completes the game!")
-                        return
+    if choice == "1":
+        display_welcome_message()
+        board = make_board(ROWS, COLUMNS)
+        character = make_character()
+        display_map_with_character_position(character)
+
+        while True:
+            describe_current_location(board, character)
+            direction = get_user_choice(character)
+            if validate_move(character, direction):
+                if move_character(character, direction):
+                    display_map_with_character_position(character)
+                    if (character["X-coordinate"], character["Y-coordinate"]) == (ROWS - 1, COLUMNS - 1) and character["Level"] >= 3 and character["XP"] >= BOSS_BATTLE_XP_NEED:
+                        if final_boss_battle(character):
+                            print("Congratulations! Pikachu completes the game!")
+                            return
+                        else:
+                            print("Pikachu is beaten by the final boss. Game over.")
+                            return
                     else:
-                        print("Pikachu is beaten by the final boss. Game over.")
-                        return
+                        if not encounter_foe(character):
+                            break
                 else:
-                    if not encounter_foe(character):
-                        break
+                    print("Move not possible. Choose a different direction or meet the requirements to face the boss.")
+                check_level_up(character)
             else:
-                print("Move not possible. Choose a different direction or meet the requirements to face the boss.")
-            check_level_up(character)
-        else:
-            print("Invalid move. Please choose a different direction.")
+                print("Invalid move. Please choose a different direction.")
+    elif choice == "2":
+        display_help()
+        return game()
+    elif choice == "3":
+        print("Exiting the game. Goodbye!")
+        return
 
 
 def main():
