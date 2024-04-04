@@ -65,24 +65,21 @@ def display_map_with_character_position(character: dict) -> None:
 
 
 def get_user_choice(character: dict) -> str:
-    choices = {"1": "North", "2": "South", "3": "East", "4": "West", "5": "Show Current HP",
-               "6": "Show Current Level"}
+    choices = ["North", "South", "East", "West", "Show Current HP", "Show Current Level"]
     print("Where would you like to go? Or type '5' to see current HP, '6' to see current level.")
-    for key, value in choices.items():
-        if key in ["1", "2", "3", "4", "5", "6"]:
-            print(f'{key}: {value}')
-    choice = (input("Choose a direction (1/2/3/4) or type 5/6: ")).strip()
-
-    while choice not in choices:
+    for index, value in enumerate(choices, start=1):
+        print(f'{index}: {value}')
+    choice = input("Choose a direction (1/2/3/4) or type 5/6: ").strip()
+    while choice not in [str(index) for index in range(1, 7)]:
         print("Invalid choice, try again.")
         choice = input("Choose a direction (1/2/3/4) or type 5/6: ").strip()
     if choice == "5":
         print(f"Current HP: {character['Current HP']}/{character['Max HP']}")
-        return get_user_choice(character)
     elif choice == "6":
         print(f"Current Level: {character['Level']}")
-        return get_user_choice(character)
-    return choice
+    else:
+        return choice
+    return get_user_choice(character)
 
 
 def validate_move(character: dict, direction: str) -> bool:
