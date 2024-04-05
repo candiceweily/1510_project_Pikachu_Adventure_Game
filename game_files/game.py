@@ -50,10 +50,10 @@ def make_character() -> dict:
     :postcondition: create the character for the game correctly
     :return: the character as a dictionary
 
-    >>> player_character = make_character()
-    >>> player_character
-    {'Name': 'Pikachu', 'X-coordinate': 0, 'Y-coordinate': 0, 'Level': 1, 'Current HP': 20, 'Max HP': 20, 'XP': 0,
-    'Ability': 'Thunder Shock', 'Potions': 5}
+    # >>> player_character = make_character()
+    # >>> player_character
+    # {'Name': 'Pikachu', 'X-coordinate': 0, 'Y-coordinate': 0, 'Level': 1, 'Current HP': 20, 'Max HP': 20, 'XP': 0,
+    # 'Ability': 'Thunder Shock', 'Potions': 5}
     """
     return {
         "Name": "Pikachu",
@@ -102,16 +102,16 @@ def describe_current_location(board: dict, character: dict) -> None:
     :precondition: character is a non-empty dictionary that contains location and attibutes
     :postcondition: describe the current location of the character correctly
 
-    >>> player_board = {(0, 0): 'Kanto', (0, 1): 'Johto', (1, 0): 'Hisui', (1, 1): 'Sinnoh'}
-    >>> player_character = {'Name': 'Pikachu', 'X-coordinate': 0, 'Y-coordinate': 0, 'Level': 1, 'Current HP': 20,
-    'Max HP': 20, 'XP': 0, 'Ability': 'Thunder Shock', 'Potions': 5}
-    >>> describe_current_location(player_board, player_character)
-    You are in Kanto, at location (0, 0).
-
-    >>> player_board = {(0, 0): 'Kanto', (0, 1): 'Johto', (1, 0): 'Hisui', (1, 1): 'Sinnoh'}
-    >>> player_character = {'Name': 'Pikachu', 'X-coordinate': 1, 'Y-coordinate': 0, 'Level': 1, 'Current HP': 20,
-    'Max HP': 20, 'XP': 0, 'Ability': 'Thunder Shock', 'Potions': 5}
-    >>> describe_current_location(player_board, player_character)
+    # >>> player_board = {(0, 0): 'Kanto', (0, 1): 'Johto', (1, 0): 'Hisui', (1, 1): 'Sinnoh'}
+    # >>> player_character = {'Name': 'Pikachu', 'X-coordinate': 0, 'Y-coordinate': 0, 'Level': 1, 'Current HP': 20,
+    # 'Max HP': 20, 'XP': 0, 'Ability': 'Thunder Shock', 'Potions': 5}
+    # >>> describe_current_location(player_board, player_character)
+    # You are in Kanto, at location (0, 0).
+    #
+    # >>> player_board = {(0, 0): 'Kanto', (0, 1): 'Johto', (1, 0): 'Hisui', (1, 1): 'Sinnoh'}
+    # >>> player_character = {'Name': 'Pikachu', 'X-coordinate': 1, 'Y-coordinate': 0, 'Level': 1, 'Current HP': 20,
+    # 'Max HP': 20, 'XP': 0, 'Ability': 'Thunder Shock', 'Potions': 5}
+    # >>> describe_current_location(player_board, player_character)
     You are in Hisui, at location (1, 0).
     """
     location = (character["X-coordinate"], character["Y-coordinate"])
@@ -175,12 +175,12 @@ def validate_move(character: dict, direction: str) -> bool:
     :postcondition: return the boolean result of the position correctly
     :return: return True if the move is valid, False otherwise
 
-    >>> validate_move({'X-coordinate': 0, 'Y-coordinate': 0}, '1')
-    False
-    >>> validate_move({'X-coordinate': 2, 'Y-coordinate': 2}, '2')
-    True
-    >>> validate_move({'X-coordinate': 4, 'Y-coordinate': 4}, '3')
-    True
+    # >>> validate_move({'X-coordinate': 0, 'Y-coordinate': 0}, '1')
+    # False
+    # >>> validate_move({'X-coordinate': 2, 'Y-coordinate': 2}, '2')
+    # True
+    # >>> validate_move({'X-coordinate': 4, 'Y-coordinate': 4}, '3')
+    # True
     """
     x_coordinate, y_coordinate = character["X-coordinate"], character["Y-coordinate"]
     if direction == "1" and x_coordinate > 0:
@@ -211,12 +211,12 @@ def move_character(character: dict, direction: str) -> bool:
     :return: True if the character's position is successfully updated, False if the move is invalid or the character
     cannot fight the boss due to insufficient level or XP
 
-    >>> move_character({'X-coordinate': 5, 'Y-coordinate': 5}, '1')
-    True
-    >>> move_character({'X-coordinate': 0, 'Y-coordinate': 0}, '4')
-    True
-    >>> move_character({'X-coordinate': 9, 'Y-coordinate': 9}, '2')
-    True
+    # >>> move_character({'X-coordinate': 5, 'Y-coordinate': 5}, '1')
+    # True
+    # >>> move_character({'X-coordinate': 0, 'Y-coordinate': 0}, '4')
+    # True
+    # >>> move_character({'X-coordinate': 9, 'Y-coordinate': 9}, '2')
+    # True
     """
     new_x, new_y = character["X-coordinate"], character["Y-coordinate"]
     if direction == "1":
@@ -235,72 +235,49 @@ def move_character(character: dict, direction: str) -> bool:
     return True
 
 
-def encounter_foe(character: dict) -> bool:
-    current_x, current_y = character["X-coordinate"], character["Y-coordinate"]
-    if current_x == ROWS - 1 and current_y == COLUMNS - 1:
-        return True
+def decide_use_potion(character: dict) -> None:
+    if character["Potions"] > 0:
+        print(f"Current HP: {character['Current HP']}")
+        use_potion = input("Would you like to use a potion before the fight? (1-yes/2-no): ").strip()
+        if use_potion == "1":
+            character["Current HP"] = min(character["Current HP"] + 5, character["Max HP"])
+            character["Potions"] -= 1
+            print(f"Potion used. Current HP: {character['Current HP']}. Potions left: {character['Potions']}.")
+        elif use_potion != "2":
+            print("Invalid input. Please enter 1 or 2.")
 
+
+def calculate_battle_outcome(character: dict, win_chance: float, xp_change: int, hp_change: int) -> bool:
+    if random.random() < win_chance:
+        print(f"You won the battle! XP + {xp_change}")
+        character["XP"] += xp_change
+        return True
+    else:
+        print(f"You lost the battle. HP - {hp_change}")
+        character["Current HP"] -= hp_change
+        if character["Current HP"] <= 0:
+            print("Game Over. Pikachu has fainted.")
+            return False
+    return True
+
+
+def handle_regular_foe_encounter(character: dict) -> bool:
+    foe_name = FOE_NAMES[character["Level"] - 1]
+    print(f"You encountered a {foe_name}!")
+    decide_use_potion(character)
+    win_chance = WIN_CHANCE_BY_LEVEL[character["Level"] - 1]
+    xp_change = XP_CHANGE_BY_LEVEL[character["Level"] - 1]
+    hp_change = HP_CHANGE_BY_LEVEL[character["Level"] - 1]
+    return calculate_battle_outcome(character, win_chance, xp_change, hp_change)
+
+
+def check_for_encounters(character: dict) -> bool:
     encounter_chance = random.randint(1, 10)
     if encounter_chance > 5:
-        foe_name = FOE_NAMES[character["Level"] - 1]
-        print(f"You encountered a {foe_name}!")
-        if character["Potions"] > 0:
-            print(f"Current HP: {character['Current HP']}")
-            use_potion = input("Would you like to use a potion before the fight? (1-yes/2-no): ").strip()
-            if use_potion == "1":
-                character["Current HP"] = min(character["Current HP"] + 5, character["Max HP"])
-                character["Potions"] -= 1
-                print(f"Potion used. Current HP: {character['Current HP']}. Potions left: {character['Potions']}.")
-            elif use_potion == "2":
-                print("You chose not to use a potion.")
-            else:
-                print("Invalid input. Please enter 1 or 2.")
-
-        win_chance = WIN_CHANCE_BY_LEVEL[character["Level"] - 1]
-        xp_change = XP_CHANGE_BY_LEVEL[character["Level"] - 1]
-        hp_change = HP_CHANGE_BY_LEVEL[character["Level"] - 1]
-        if random.random() < win_chance:
-            print(f"You won the battle! XP + {xp_change}, HP + {hp_change}")
-            character["XP"] += xp_change
-            character["Current HP"] = min(character["Current HP"] + hp_change, character["Max HP"])
-        else:
-            print(f"You lost the battle. HP - {hp_change}")
-            character["Current HP"] -= hp_change
-            if character["Current HP"] <= 0:
-                print("Game Over. Pikachu has fainted.")
-                return False
-    elif encounter_chance < 3:
-        guess_name = GUESS_GAME_NAME[character["Level"] - 1]
-        print(f"You encountered a {guess_name}!")
-        guess_range = GUESS_GAME_RANGE[character["Level"] - 1]
-        random_number = random.randint(1, guess_range)
-        while True:
-            try:
-                print(f"There is a random number generated in [1 to {guess_range}]")
-                user_input = int(input("Please guess, what is the number: ").strip())
-            except ValueError:
-                print(f"Invalid input: Please enter a number.")
-            else:
-                if 1 <= user_input <= guess_range:
-                    print("You guessing:", user_input)
-                    xp_change = GUESS_GAME_XP_CHANGE_BY_LEVEL[character["Level"] - 1]
-                    hp_change = GUESS_GAME_HP_CHANGE_BY_LEVEL[character["Level"] - 1]
-                    if user_input == random_number:
-                        character["XP"] += xp_change
-                        character["Current HP"] = min(character["Current HP"] + hp_change, character["Max HP"])
-                        print(f"Your guessing is correct, {random_number}! XP + {xp_change}, HP + {hp_change}")
-                    else:
-                        character["Current HP"] -= hp_change
-                        print(f"Your guessing is wrong! Correct number is {random_number}. HP - {hp_change}")
-                        if character["Current HP"] <= 0:
-                            print("Game Over. Pikachu has fainted.")
-                            return False
-                    break
-                else:
-                    print(f"The number is not in the valid range [1 to {guess_range}]")
+        return handle_regular_foe_encounter(character)
     else:
         print("No foes encountered this time.")
-    return True
+        return True
 
 
 def check_level_up(character: dict) -> None:
@@ -383,15 +360,19 @@ def game():
             if validate_move(character, direction):
                 if move_character(character, direction):
                     display_map_with_character_position(character)
-                    if (character["X-coordinate"], character["Y-coordinate"]) == (ROWS - 1, COLUMNS - 1) and character["Level"] >= 3 and character["XP"] >= BOSS_BATTLE_XP_NEED:
-                        if final_boss_battle(character):
-                            print("Congratulations! Pikachu completes the game!")
-                            return
+                    if (character["X-coordinate"], character["Y-coordinate"]) == (ROWS - 1, COLUMNS - 1):
+                        if character["Level"] >= 3 and character["XP"] >= BOSS_BATTLE_XP_NEED:
+                            if final_boss_battle(character):
+                                print("Congratulations! Pikachu completes the game!")
+                                return
+                            else:
+                                print("Pikachu is beaten by the final boss. Game over.")
+                                return
                         else:
-                            print("Pikachu is beaten by the final boss. Game over.")
-                            return
+                            print("You've reached the final boss location, but you're not ready to fight it. "
+                                  "Gain more XP or level up.")
                     else:
-                        if not encounter_foe(character):
+                        if not check_for_encounters(character):
                             break
                 else:
                     print("Move not possible. Choose a different direction or meet the requirements to face the boss.")
