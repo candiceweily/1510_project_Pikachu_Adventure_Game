@@ -29,13 +29,11 @@ def make_board(rows: int, columns: int) -> dict:
     """
     Create a game board with random room descriptions.
 
-    This function generates a board for the game with the specified number of rows and columns. Each cell on the board
-    is assigned a random description from a predefined list.
-
     :param rows: a positive integer
     :param columns: a positive integer
     :precondition: rows and columns must be positive integer
-    :postcondition: create the game board which each key is a tuple and each value is a string description of the room
+    :postcondition: correctly create the game board which each key is a tuple and each value is a string description of
+    the room
     :return: the game board as a dictionary
     """
     descriptions = ['Kanto', 'Johto', 'Hoenn', 'Sinnoh', 'Hisui']
@@ -47,7 +45,7 @@ def make_character() -> dict:
     Create a game character for the game.
 
     :precondition: character must be a dictionary
-    :postcondition: create the character for the game correctly
+    :postcondition: correctly create the character for the game
     :return: the character as a dictionary
 
     # >>> player_character = make_character()
@@ -71,8 +69,6 @@ def make_character() -> dict:
 def display_welcome_message() -> None:
     """
     Print a welcome message and an ASCII art representation of Pikachu.
-
-    :postcondition: display a welcome message and an ASCII art representation of Pikachu
     """
     print("Welcome to Pikachu adventure game!")
     print(r"""
@@ -97,10 +93,10 @@ def describe_current_location(board: dict, character: dict) -> None:
 
     :param board: board is a non-empty dictionary
     :param character: character is a non-empty dictionary
-    :precondition: board is a non-empty dictionary which each key is a tuple (row, column) and each value is a string
-    description of the room
-    :precondition: character is a non-empty dictionary that contains location and attibutes
-    :postcondition: describe the current location of the character correctly
+    :precondition: board is a non-empty dictionary which each key is a tuple and each value is a string description of
+    the room
+    :precondition: character is a non-empty dictionary that contains location and attributes
+    :postcondition: correctly describe the current location of the character
 
     # >>> player_board = {(0, 0): 'Kanto', (0, 1): 'Johto', (1, 0): 'Hisui', (1, 1): 'Sinnoh'}
     # >>> player_character = {'Name': 'Pikachu', 'X-coordinate': 0, 'Y-coordinate': 0, 'Level': 1, 'Current HP': 20,
@@ -123,8 +119,8 @@ def display_map_with_character_position(character: dict) -> None:
     Display the game board map with a 10*10 grid, and indicate where the character and the boss is.
 
     :param character: character is a non-empty dictionary
-    :precondition: character is a non-empty dictionary that contains location and room description
-    :postcondition: display the current location of the character in the map correctly
+    :precondition: character is a non-empty dictionary that contains location and attributes
+    :postcondition: correctly display the current location of the character in the map
     """
     print('Game Board Map: ')
     print("+" + "----+" * 10)
@@ -165,15 +161,12 @@ def validate_move(character: dict, direction: str) -> bool:
     """
     Determine if a move in the specified direction is valid.
 
-    This function checks if moving the character in the given direction is possible without leaving the bounds of the
-    board. Return True if the move is valid, False otherwise.
-
     :param character: a non-empty dictionary
     :param direction: a non-empty string
-    :precondition: character must be a dictionary that contains its location and other attributes
+    :precondition: character must be a dictionary that contains location and attributes
     :precondition: direction must be one of '1', '2', '3', '4'
-    :postcondition: return the boolean result of the position correctly
-    :return: return True if the move is valid, False otherwise
+    :postcondition: correctly return the boolean result of the position
+    :return: return True if the move is valid, otherwise return False
 
     # >>> validate_move({'X-coordinate': 0, 'Y-coordinate': 0}, '1')
     # False
@@ -199,16 +192,12 @@ def move_character(character: dict, direction: str) -> bool:
     """
     Move the character in a specified direction if possible.
 
-    This function updates the character's position based on the given direction. It checks whether the move leads the
-    character to the final boss location. If the character reaches the boss location but doesn't meet the level or XP
-    requirements, it will not allow the move and prints a message. Otherwise, the character's position is updated.
-
     :param character: a dictionary
     :param direction: a string
-    :precondition: character is a non-empty dictionary that contains location and attibutes
+    :precondition: character is a non-empty dictionary that contains location and attributes
     :precondition: direction must be one of the strings '1', '2', '3', '4'
-    :postcondition: move the character accordingly to the given direction
-    :return: True if the character's position is successfully updated, False if the move is invalid or the character
+    :postcondition: correctly move the character to the given direction
+    :return: True if the character's position is successfully updated; False if the move is invalid or the character
     cannot fight the boss due to insufficient level or XP
 
     # >>> move_character({'X-coordinate': 5, 'Y-coordinate': 5}, '1')
@@ -282,10 +271,11 @@ def check_for_encounters(character: dict) -> bool:
 
 def check_level_up(character: dict) -> None:
     """
-    Check if the character has enough experience points (XP) to level up and update the character's level and ability.
+    Check if the character has enough XP to level up and update the character's level and ability.
+
     :param character: character is a non-empty dictionary
     :precondition: character is a non-empty dictionary that contains location and attributes
-    :postcondition: check if Pikachu has enough experience points (XP) to level up and update the level and ability
+    :postcondition: check if Pikachu has enough XP to level up and correctly update the level and ability
     """
     level = character["Level"]
     if level < 3 and character["XP"] >= LEVEL_UP_EXPERIENCE[level - 1]:
@@ -299,9 +289,6 @@ def check_level_up(character: dict) -> None:
 def print_congratulations() -> None:
     """
     Print a congratulatory message and an ASCII art representation to celebrate defeating the final boss.
-
-    This function is designed to be called when Pikachu has successfully defeated the final boss in the game. It outputs
-    a congratulatory message to the player and displays an ASCII art, followed by a message indicating Pikachu success.
     """
     print("You've defeated the final boss!")
     print(r""" 
