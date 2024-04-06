@@ -306,8 +306,8 @@ def print_congratulations() -> None:
     print("Pikachu is enjoying the triumph!")
 
 
-def process_battle_round(character: dict, boss_hp: int) -> tuple:
-    print(f"Round: ")
+def process_battle_round(character: dict, boss_hp: int, round_number: int) -> tuple:
+    print(f"Round {round_number}:")
     if random.random() < BOSS_BATTLE_HIT_CHANCE:
         boss_hp -= BOSS_BATTLE_HP_REDUCE[0]
         print(f"You hit the boss! Boss's HP is now {boss_hp}.")
@@ -318,15 +318,16 @@ def process_battle_round(character: dict, boss_hp: int) -> tuple:
         print(f"The boss hit you! Your HP is now {character['Current HP']}.")
         if character["Current HP"] <= 0:
             print("Game Over. Pikachu has fainted.")
-            return boss_hp, False
-    return boss_hp, True
+            return boss_hp, False, round_number
+    return boss_hp, True, round_number + 1
 
 
 def final_boss_battle(character: dict) -> bool:
     boss_hp = 50
+    round_number = 1
     print("The final boss battle begins!")
     while boss_hp > 0 and character["Current HP"] > 0:
-        boss_hp, player_alive = process_battle_round(character, boss_hp)
+        boss_hp, player_alive, round_number = process_battle_round(character, boss_hp, round_number)
         if not player_alive:
             return False
     print_congratulations()
