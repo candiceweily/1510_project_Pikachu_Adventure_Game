@@ -306,24 +306,28 @@ def print_congratulations() -> None:
     print("Pikachu is enjoying the triumph!")
 
 
+def process_battle_round(character: dict, boss_hp: int) -> tuple:
+    print(f"Round: ")
+    if random.random() < BOSS_BATTLE_HIT_CHANCE:
+        boss_hp -= BOSS_BATTLE_HP_REDUCE[0]
+        print(f"You hit the boss! Boss's HP is now {boss_hp}.")
+    else:
+        print("You missed!")
+    if boss_hp > 0:
+        character["Current HP"] -= BOSS_BATTLE_HP_REDUCE[1]
+        print(f"The boss hit you! Your HP is now {character['Current HP']}.")
+        if character["Current HP"] <= 0:
+            print("Game Over. Pikachu has fainted.")
+            return boss_hp, False
+    return boss_hp, True
+
+
 def final_boss_battle(character: dict) -> bool:
     boss_hp = 50
     print("The final boss battle begins!")
-    round_number = 0
     while boss_hp > 0 and character["Current HP"] > 0:
-        round_number += 1
-        print(f"Round {round_number}:")
-        player_hit_chance = BOSS_BATTLE_HIT_CHANCE
-        if random.random() < player_hit_chance:
-            boss_hp -= BOSS_BATTLE_HP_REDUCE[0]
-            print(f"You hit the boss! Boss's HP is now {boss_hp}.")
-        else:
-            print("You missed!")
-        if boss_hp > 0:
-            character["Current HP"] -= BOSS_BATTLE_HP_REDUCE[1]
-            print(f"The boss hit you! Your HP is now {character['Current HP']}.")
-        if character["Current HP"] <= 0:
-            print("Game Over. Pikachu has fainted.")
+        boss_hp, player_alive = process_battle_round(character, boss_hp)
+        if not player_alive:
             return False
     print_congratulations()
     return True
