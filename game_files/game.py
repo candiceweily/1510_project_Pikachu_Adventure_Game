@@ -4,7 +4,7 @@ from game_files import HP_CHANGE_BY_LEVEL, XP_CHANGE_BY_LEVEL, ABILITY_BY_LEVEL
 from game_files import BOSS_BATTLE_XP_NEED, BOSS_BATTLE_HP_REDUCE, BOSS_BATTLE_HIT_CHANCE
 
 
-def menu():
+def menu() -> str:
     """
     Display the main menu for the game and prompt the user to make a choice.
 
@@ -23,7 +23,7 @@ def menu():
             print("Invalid choice. Please enter 1, 2, or 3.")
 
 
-def display_help():
+def display_help() -> None:
     """
     Display the help section for the game.
 
@@ -35,7 +35,7 @@ def display_help():
     print("Make strategic decisions to ensure Pikachu's victory.")
 
 
-def make_board(rows: int, columns: int) -> dict:
+def make_board(rows: int, columns: int) -> dict[tuple[int, int]: str]:
     """
     Create a game board with random room descriptions.
 
@@ -53,7 +53,7 @@ def make_board(rows: int, columns: int) -> dict:
     return {(row, col): random.choice(descriptions) for row in range(rows) for col in range(columns)}
 
 
-def make_character() -> dict:
+def make_character() -> dict[str: str | int]:
     """
     Create a game character for the game.
 
@@ -100,7 +100,7 @@ def display_welcome_message() -> None:
     """)
 
 
-def describe_current_location(board: dict, character: dict) -> None:
+def describe_current_location(board: dict[tuple[int, int]: str], character: dict[str: str | int]) -> None:
     """
     Describe the current location of the character.
 
@@ -127,7 +127,7 @@ def describe_current_location(board: dict, character: dict) -> None:
     print(f'You are in {board[location]}, at location {location}.')
 
 
-def display_map_with_character_position(character: dict) -> None:
+def display_map_with_character_position(character: dict[str: str | int]) -> None:
     """
     Display the game board map with a 10*10 grid, and indicate where the character and the boss is.
 
@@ -152,7 +152,7 @@ def display_map_with_character_position(character: dict) -> None:
         print("\n+" + "----+" * 10)
 
 
-def get_user_choice(character: dict) -> str:
+def get_user_choice(character: dict[str: str | int]) -> str:
     """
     Prompt the user to make a choice where to move their character or to view their character's current HP or level.
 
@@ -178,7 +178,7 @@ def get_user_choice(character: dict) -> str:
     return get_user_choice(character)
 
 
-def validate_move(character: dict, direction: str) -> bool:
+def validate_move(character: dict[str: str | int], direction: str) -> bool:
     """
     Determine if a move in the specified direction is valid.
 
@@ -212,7 +212,7 @@ def validate_move(character: dict, direction: str) -> bool:
         return False
 
 
-def move_character(character: dict, direction: str) -> bool:
+def move_character(character: dict[str: str | int], direction: str) -> bool:
     """
     Move the character in a specified direction if possible.
 
@@ -252,7 +252,7 @@ def move_character(character: dict, direction: str) -> bool:
     return True
 
 
-def decide_use_potion(character: dict) -> None:
+def decide_use_potion(character: dict[str: str | int]) -> None:
     """
     Prompt the player to decide whether to use a potion to heal the character before a fight.
 
@@ -271,7 +271,7 @@ def decide_use_potion(character: dict) -> None:
             print("Invalid input. Please enter 1 or 2.")
 
 
-def calculate_battle_outcome(character: dict, win_chance: float, xp_change: int, hp_change: int) -> bool:
+def calculate_battle_outcome(character: dict[str: str | int], win_chance: float, xp_change: int, hp_change: int) -> bool:
     if random.random() < win_chance:
         print(f"You won the battle! XP + {xp_change}")
         character["XP"] += xp_change
@@ -285,7 +285,7 @@ def calculate_battle_outcome(character: dict, win_chance: float, xp_change: int,
     return True
 
 
-def handle_regular_foe_encounter(character: dict) -> bool:
+def handle_regular_foe_encounter(character: dict[str: str | int]) -> bool:
     foe_name = FOE_NAMES[character["Level"] - 1]
     print(f"You encountered a {foe_name}!")
     decide_use_potion(character)
@@ -295,7 +295,7 @@ def handle_regular_foe_encounter(character: dict) -> bool:
     return calculate_battle_outcome(character, win_chance, xp_change, hp_change)
 
 
-def check_for_encounters(character: dict) -> bool:
+def check_for_encounters(character: dict[str: str | int]) -> bool:
     encounter_chance = random.randint(1, 10)
     if encounter_chance > 5:
         return handle_regular_foe_encounter(character)
@@ -304,7 +304,7 @@ def check_for_encounters(character: dict) -> bool:
         return True
 
 
-def check_level_up(character: dict) -> None:
+def check_level_up(character: dict[str: str | int]) -> None:
     """
     Check if the character has enough XP to level up and update the character's level and ability.
 
@@ -341,7 +341,7 @@ def print_congratulations() -> None:
     print("Pikachu is enjoying the triumph!")
 
 
-def process_battle_round(character: dict, boss_hp: int, round_number: int) -> tuple:
+def process_battle_round(character: dict[str: str | int], boss_hp: int, round_number: int) -> tuple[int, bool, int]:
     print(f"Round {round_number}:")
     if random.random() < BOSS_BATTLE_HIT_CHANCE:
         boss_hp -= BOSS_BATTLE_HP_REDUCE[0]
@@ -357,7 +357,7 @@ def process_battle_round(character: dict, boss_hp: int, round_number: int) -> tu
     return boss_hp, True, round_number + 1
 
 
-def final_boss_battle(character: dict) -> bool:
+def final_boss_battle(character: dict[str: str | int]) -> bool:
     boss_hp = 50
     round_number = 1
     print("The final boss battle begins!")
@@ -369,7 +369,7 @@ def final_boss_battle(character: dict) -> bool:
     return True
 
 
-def game():
+def game() -> None:
     """
     Assemble the main game loop for a grid-based adventure game.
     """
