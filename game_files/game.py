@@ -1,11 +1,16 @@
 import random
 from game_files import ROWS, COLUMNS, LEVEL_UP_EXPERIENCE, MAX_HP_BY_LEVEL, FOE_NAMES, WIN_CHANCE_BY_LEVEL
-from game_files import GUESS_GAME_NAME, GUESS_GAME_HP_CHANGE_BY_LEVEL, GUESS_GAME_XP_CHANGE_BY_LEVEL, GUESS_GAME_RANGE
 from game_files import HP_CHANGE_BY_LEVEL, XP_CHANGE_BY_LEVEL, ABILITY_BY_LEVEL
 from game_files import BOSS_BATTLE_XP_NEED, BOSS_BATTLE_HP_REDUCE, BOSS_BATTLE_HIT_CHANCE
 
 
 def menu():
+    """
+    Display the main menu for the game and prompt the user to make a choice.
+
+    :postcondition: prompt the user to choose the desired option return the choice from the user
+    :return: the choice from the user as a string
+    """
     while True:
         print("\n--- Pikachu Adventure Game Menu ---")
         print("1. Start Game")
@@ -19,6 +24,11 @@ def menu():
 
 
 def display_help():
+    """
+    Display the help section for the game.
+
+    :postcondition: print the help section for the game
+    """
     print("\n--- Help & Information ---")
     print("Welcome to Pikachu Adventure Game!")
     print("Navigate Pikachu through various locations, battle foes, and level up.")
@@ -28,6 +38,9 @@ def display_help():
 def make_board(rows: int, columns: int) -> dict:
     """
     Create a game board with random room descriptions.
+
+    This function generates a board for the game with the specified number of rows and columns. Each cell on the board
+    is assigned a random description from a predefined list.
 
     :param rows: a positive integer
     :param columns: a positive integer
@@ -140,6 +153,14 @@ def display_map_with_character_position(character: dict) -> None:
 
 
 def get_user_choice(character: dict) -> str:
+    """
+    Prompt the user to make a choice where to move their character or to view their character's current HP or level.
+
+    :param character: a non-empty dictionary
+    :precondition: character is a non-empty dictionary that contains location and attributes
+    :postcondition: get the choice of the character or display the current HP or level correctly
+    :return: the choice of the character as a string
+    """
     choices = ["North", "South", "East", "West", "Show Current HP", "Show Current Level"]
     print("Where would you like to go? Or type '5' to see current HP, '6' to see current level.")
     for index, value in enumerate(choices, start=1):
@@ -160,6 +181,9 @@ def get_user_choice(character: dict) -> str:
 def validate_move(character: dict, direction: str) -> bool:
     """
     Determine if a move in the specified direction is valid.
+
+    This function checks if moving the character in the given direction is possible without leaving the bounds of the
+    board. Return True if the move is valid, False otherwise.
 
     :param character: a non-empty dictionary
     :param direction: a non-empty string
@@ -191,6 +215,10 @@ def validate_move(character: dict, direction: str) -> bool:
 def move_character(character: dict, direction: str) -> bool:
     """
     Move the character in a specified direction if possible.
+
+    This function updates the character's position based on the given direction. It checks whether the move leads the
+    character to the final boss location. If the character reaches the boss location but doesn't meet the level or XP
+    requirements, it will not allow the move and prints a message. Otherwise, the character's position is updated.
 
     :param character: a dictionary
     :param direction: a string
@@ -225,6 +253,13 @@ def move_character(character: dict, direction: str) -> bool:
 
 
 def decide_use_potion(character: dict) -> None:
+    """
+    Prompt the player to decide whether to use a potion to heal the character before a fight.
+
+    :param character: a non-empty dictionary
+    :precondition: character is a non-empty dictionary that contains location and attributes
+    :postcondition: update the potion data based on the user choice and print the useful information
+    """
     if character["Potions"] > 0:
         print(f"Current HP: {character['Current HP']}")
         use_potion = input("Would you like to use a potion before the fight? (1-yes/2-no): ").strip()
