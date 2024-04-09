@@ -272,6 +272,18 @@ def decide_use_potion(character: dict[str: str | int]) -> None:
 
 
 def calculate_battle_outcome(character: dict[str: str | int], win_chance: float, xp_change: int, hp_change: int) -> bool:
+    """
+    Calculate and apply the outcome of a battle based on the character's chance to win.
+
+    :param character: a non-empty dictionary
+    :param win_chance: a float
+    :param xp_change: a positive integer
+    :param hp_change: a positive integer
+    :precondition: character is a non-empty dictionary that contains location and attributes
+    :precondition: win_chance is a float between 0 and 1, xp_change and hp_change are positive integers
+    :postcondition: XP is increased if character wins, decreased otherwise. If HP falls to 0 or below, the game is over
+    :return: True if the character wins the battle, False otherwise
+    """
     if random.random() < win_chance:
         print(f"You won the battle! XP + {xp_change}")
         character["XP"] += xp_change
@@ -286,6 +298,15 @@ def calculate_battle_outcome(character: dict[str: str | int], win_chance: float,
 
 
 def handle_regular_foe_encounter(character: dict[str: str | int]) -> bool:
+    """
+    Simulate an encounter with a regular foe and handle the battle outcome.
+
+    :param character: a non-empty dictionary
+    :precondition: character is a non-empty dictionary that contains location and attributes
+    :postcondition: XP is increased if character wins, and HP is decreased if character loses
+    :return: True if the character survives the encounter, False if the character is defeated and dies
+
+    """
     foe_name = FOE_NAMES[character["Level"] - 1]
     print(f"You encountered a {foe_name}!")
     decide_use_potion(character)
@@ -296,6 +317,17 @@ def handle_regular_foe_encounter(character: dict[str: str | int]) -> bool:
 
 
 def check_for_encounters(character: dict[str: str | int]) -> bool:
+    """
+    Check if the character encounters a foe and handle the encounter accordingly.
+
+    :param character: a non-empty dictionary
+    :precondition: character is a non-empty dictionary that contains location and attributes
+    :postcondition: the character's state may be updated based on the battle outcome if an encounter occurs and print a
+    useful message otherwise
+    :return: True if the character survives the encounter or if no encounter occurs, False if the character is defeated
+    and dies
+
+    """
     encounter_chance = random.randint(1, 10)
     if encounter_chance > 5:
         return handle_regular_foe_encounter(character)
@@ -342,6 +374,26 @@ def print_congratulations() -> None:
 
 
 def process_battle_round(character: dict[str: str | int], boss_hp: int, round_number: int) -> tuple[int, bool, int]:
+    """
+    Process a single round of battle between the character and the boss, updating health points accordingly.
+
+    In each round of the battle, this function determines whether the character successfully hits the boss based on a
+    predefined hit chance. If successful, the boss's HP is reduced. Regardless of the hit's success, the boss then
+    attacks the character, potentially reducing the character's HP. If the character's HP falls to 0 or below, the game
+    is over.
+
+    :param character: a non-empty dictionary
+    :param boss_hp: an integer
+    :param round_number: a positive integer
+    :precondition: character is a non-empty dictionary that contains location and attributes
+    :precondition: boss_hp is an integer representing the current boss HP
+    :precondition: round_number is an integer representing the current round number
+    :postcondition: process the battle and update health points accordingly
+
+    :return: a tuple containing the updated boss's HP, a boolean indicating whether the character is still alive, and
+    the next round number
+
+    """
     print(f"Round {round_number}:")
     if random.random() < BOSS_BATTLE_HIT_CHANCE:
         boss_hp -= BOSS_BATTLE_HP_REDUCE[0]
@@ -358,6 +410,15 @@ def process_battle_round(character: dict[str: str | int], boss_hp: int, round_nu
 
 
 def final_boss_battle(character: dict[str: str | int]) -> bool:
+    """
+    Conduct the final boss battle of the game.
+
+    :param character: a non-empty dictionary
+    :precondition: character is a non-empty dictionary that contains location and attributes
+    :postcondition: update the character's HP based on battle outcomes, end the battle when either party's HP reaches
+    zero or below
+    :return: True if the character defeats the boss and survives the battle, False otherwise
+    """
     boss_hp = 50
     round_number = 1
     print("The final boss battle begins!")
