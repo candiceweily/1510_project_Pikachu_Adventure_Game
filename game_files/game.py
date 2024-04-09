@@ -1,4 +1,5 @@
 import random
+import itertools
 from game_files import ROWS, COLUMNS, LEVEL_UP_EXPERIENCE, MAX_HP_BY_LEVEL, FOE_NAMES, WIN_CHANCE_BY_LEVEL
 from game_files import HP_CHANGE_BY_LEVEL, XP_CHANGE_BY_LEVEL, ABILITY_BY_LEVEL
 from game_files import BOSS_BATTLE_XP_NEED, BOSS_BATTLE_HP_REDUCE, BOSS_BATTLE_HIT_CHANCE
@@ -140,16 +141,19 @@ def display_map_with_character_position(character: dict[str: str | int]) -> None
     yellow_start = "\033[1m\033[33m"
     red_start = "\033[1m\033[31m"
     color_reset = "\033[0m"
-    for row in range(10):
-        print("|", end="")
-        for column in range(10):
-            if (row, column) == (character['X-coordinate'], character['Y-coordinate']):
-                print(f" {yellow_start}P{color_reset}  |", end="")
-            elif (row, column) == (9, 9):
-                print(f" {red_start}B{color_reset}  |", end="")
-            else:
-                print("    |", end="")
-        print("\n+" + "----+" * 10)
+
+    for row, column in itertools.product(range(10), repeat=2):
+        if column == 0:
+            print("|", end="")
+        if (row, column) == (character['X-coordinate'], character['Y-coordinate']):
+            print(f" {yellow_start}P{color_reset}  |", end="")
+        elif (row, column) == (9, 9):
+            print(f" {red_start}B{color_reset}  |", end="")
+        else:
+            print("    |", end="")
+
+        if column == 9:
+            print("\n+" + "----+" * 10)
 
 
 def get_user_choice(character: dict[str: str | int]) -> str:
