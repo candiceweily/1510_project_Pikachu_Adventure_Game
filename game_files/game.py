@@ -148,7 +148,7 @@ def display_map_with_character_position(character: dict[str: str | int]) -> None
         if (row, column) == (character['X-coordinate'], character['Y-coordinate']):
             print(f" {yellow_start}P{color_reset}  |", end="")
         elif (row, column) == (9, 9):
-            print(f" {red_start}B{color_reset}  |", end="")
+            print(f" {red_start}🧟{color_reset} |", end="")
         else:
             print("    |", end="")
 
