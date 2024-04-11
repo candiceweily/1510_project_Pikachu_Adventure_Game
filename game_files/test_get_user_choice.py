@@ -64,7 +64,7 @@ class TestGetUserChoice(TestCase):
 
     @patch('builtins.input', side_effect=['6', '1'])
     @patch('sys.stdout', new_callable=io.StringIO)
-    def test_valid_choice_number_five(self, mock_stdout, __):
+    def test_valid_choice_number_six(self, mock_stdout, __):
         get_user_choice(self.character)
         current_level = self.character['Level']
 
