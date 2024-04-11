@@ -196,12 +196,12 @@ def validate_move(character: dict[str: str | int], direction: str) -> bool:
     :postcondition: correctly return the boolean result of the position
     :return: return True if the move is valid, otherwise return False
 
-    # >>> validate_move({'X-coordinate': 0, 'Y-coordinate': 0}, '1')
-    # False
-    # >>> validate_move({'X-coordinate': 2, 'Y-coordinate': 2}, '2')
-    # True
-    # >>> validate_move({'X-coordinate': 4, 'Y-coordinate': 4}, '3')
-    # True
+    >>> validate_move({'X-coordinate': 0, 'Y-coordinate': 0}, '1')
+    False
+    >>> validate_move({'X-coordinate': 2, 'Y-coordinate': 2}, '2')
+    True
+    >>> validate_move({'X-coordinate': 4, 'Y-coordinate': 4}, '3')
+    True
     """
     x_coordinate, y_coordinate = character["X-coordinate"], character["Y-coordinate"]
     if direction == "1" and x_coordinate > 0:
@@ -232,12 +232,12 @@ def move_character(character: dict[str: str | int], direction: str) -> bool:
     :return: True if the character's position is successfully updated; False if the move is invalid or the character
     cannot fight the boss due to insufficient level or XP
 
-    # >>> move_character({'X-coordinate': 5, 'Y-coordinate': 5}, '1')
-    # True
-    # >>> move_character({'X-coordinate': 0, 'Y-coordinate': 0}, '4')
-    # True
-    # >>> move_character({'X-coordinate': 9, 'Y-coordinate': 9}, '2')
-    # True
+    >>> move_character({'X-coordinate': 5, 'Y-coordinate': 5}, '1')
+    True
+    >>> move_character({'X-coordinate': 0, 'Y-coordinate': 0}, '4')
+    True
+    >>> move_character({'X-coordinate': 9, 'Y-coordinate': 9}, '2')
+    True
     """
     new_x, new_y = character["X-coordinate"], character["Y-coordinate"]
     if direction == "1":
