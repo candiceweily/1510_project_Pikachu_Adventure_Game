@@ -376,18 +376,19 @@ def print_congratulations() -> None:
     Print a congratulatory message and an ASCII art representation to celebrate defeating the final boss.
     """
     print("You've defeated the final boss!")
-    print(r""" 
-               ___________
-              '._==_==_=_.'
-              .-\:      /-.
-             | (|:.     |) |
-              '-|:.     |-'
-                \::.    /
-                 '::. .'
-                   ) (
-                 _.' '._
-                `"""""""` 
-    """)
+    print("\033[93m" + r"""
+                   ___________
+                  '._==_==_=_.'
+                  .-\:      /-.
+                 | (|:.     |) |
+                  '-|:.     |-'
+                    \::.    /
+                     '::. .'
+                       ) (
+                     _.' '._
+                    `-------` 
+    """ + "\033[0m")
+
     print("Pikachu is enjoying the triumph!")
 
 
