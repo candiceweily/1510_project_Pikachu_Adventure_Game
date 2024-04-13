@@ -146,7 +146,6 @@ def display_map_with_character_position(character: dict[str: str | int]) -> None
     print('Game Board Map: ')
     print("+" + "----+" * 10)
     yellow_start = "\033[1m\033[33m"
-    red_start = "\033[1m\033[31m"
     color_reset = "\033[0m"
 
     for row, column in itertools.product(range(10), repeat=2):
@@ -155,7 +154,7 @@ def display_map_with_character_position(character: dict[str: str | int]) -> None
         if (row, column) == (character['X-coordinate'], character['Y-coordinate']):
             print(f" {yellow_start}⚡{color_reset}  |", end="")
         elif (row, column) == (9, 9):
-            print(f" {red_start}👹{color_reset} |", end="")
+            print(f" 👹 |", end="")
         else:
             print("    |", end="")
 
