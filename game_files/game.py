@@ -339,11 +339,19 @@ def check_for_encounters(character: dict[str: str | int]) -> bool:
 
     """
     encounter_chance = random.randint(1, 10)
-    if encounter_chance > 5:
+    if encounter_chance <= 4:
         return handle_regular_foe_encounter(character)
+    elif 4 < encounter_chance <= 8:
+        print("Pikachu found a challenge stone inscribed with ancient numerals!")
+        xp_gained = run_math_quiz()
+        if xp_gained > 0:
+            character['XP'] += xp_gained
+            print(f"Pikachu earns {xp_gained} XP for solving the math challenge!")
+    elif 8 < encounter_chance <= 10:
+        run_treasure_hunt(character)
     else:
-        print("No foes encountered this time.")
-        return True
+        print("It's a peaceful moment. Nothing special happens.")
+    return True
 
 
 def run_math_quiz() -> int:
