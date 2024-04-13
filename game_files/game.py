@@ -315,7 +315,6 @@ def handle_regular_foe_encounter(character: dict[str: str | int]) -> bool:
     :precondition: character is a non-empty dictionary that contains location and attributes
     :postcondition: XP is increased if character wins, and HP is decreased if character loses
     :return: True if the character survives the encounter, False if the character is defeated and dies
-
     """
     foe_name = FOE_NAMES[character["Level"] - 1]
     print(f"You encountered a {foe_name}!")
@@ -336,7 +335,6 @@ def check_for_encounters(character: dict[str: str | int]) -> bool:
     useful message otherwise
     :return: True if the character survives the encounter or if no encounter occurs, False if the character is defeated
     and dies
-
     """
     encounter_chance = random.randint(1, 10)
     if encounter_chance <= 4:
@@ -355,6 +353,12 @@ def check_for_encounters(character: dict[str: str | int]) -> bool:
 
 
 def run_math_quiz() -> int:
+    """
+    Conducts a simple math quiz where the user is asked to solve a math problem.
+    The character earns XP based on the correctness of the answer.
+
+    :return: The amount of XP earned, 5 for a correct answer and 0 for an incorrect answer
+    """
     num1, num2 = random.randint(1, 10), random.randint(1, 10)
     operation = random.choice(['+', '-', '*'])
     correct_answer = eval(f"{num1} {operation} {num2}")
