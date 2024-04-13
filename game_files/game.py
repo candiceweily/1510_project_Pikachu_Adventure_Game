@@ -9,6 +9,8 @@ from game_files.game_board import make_board
 from game_files.game_character import make_character, describe_current_location
 from game_files.game_navigation import display_map_with_character_position, validate_move, move_character
 from game_files.game_progress import get_user_choice, decide_use_potion
+from game_files.game_foe import handle_regular_foe_encounter, calculate_battle_outcome
+
 
 def display_welcome_message() -> None:
     """
@@ -29,50 +31,6 @@ def display_welcome_message() -> None:
                        :-._____-.:
                       `''       `'' 
     """ + "\033[0m")
-
-
-def calculate_battle_outcome(character: dict[str: str | int], win_chance: float, xp_change: int, hp_change: int) -> bool:
-    """
-    Calculate and apply the outcome of a battle based on the character's chance to win.
-
-    :param character: a non-empty dictionary
-    :param win_chance: a float
-    :param xp_change: a positive integer
-    :param hp_change: a positive integer
-    :precondition: character is a non-empty dictionary that contains location and attributes
-    :precondition: win_chance is a float between 0 and 1, xp_change and hp_change are positive integers
-    :postcondition: XP is increased if character wins, decreased otherwise. If HP falls to 0 or below, the game is over
-    :return: True if the character wins the battle, False otherwise
-    """
-    if random.random() < win_chance:
-        print(f"You won the battle! XP + {xp_change}")
-        character["XP"] += xp_change
-        return True
-    else:
-        print(f"You lost the battle. HP - {hp_change}")
-        character["Current HP"] -= hp_change
-        if character["Current HP"] <= 0:
-            print("Game Over. Pikachu has fainted.")
-            return False
-    return True
-
-
-def handle_regular_foe_encounter(character: dict[str: str | int]) -> bool:
-    """
-    Simulate an encounter with a regular foe and handle the battle outcome.
-
-    :param character: a non-empty dictionary
-    :precondition: character is a non-empty dictionary that contains location and attributes
-    :postcondition: XP is increased if character wins, and HP is decreased if character loses
-    :return: True if the character survives the encounter, False if the character is defeated and dies
-    """
-    foe_name = FOE_NAMES[character["Level"] - 1]
-    print(f"You encountered a {foe_name}!")
-    decide_use_potion(character)
-    win_chance = WIN_CHANCE_BY_LEVEL[character["Level"] - 1]
-    xp_change = XP_CHANGE_BY_LEVEL[character["Level"] - 1]
-    hp_change = HP_CHANGE_BY_LEVEL[character["Level"] - 1]
-    return calculate_battle_outcome(character, win_chance, xp_change, hp_change)
 
 
 def check_for_encounters(character: dict[str: str | int]) -> bool:
