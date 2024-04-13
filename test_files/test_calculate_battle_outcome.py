@@ -1,10 +1,10 @@
 from unittest import TestCase
 from unittest.mock import patch
-from game_files.game import calculate_battle_outcome
+from game_files.game_foe import calculate_battle_outcome
 
 
 class TestCalculateBattleOutcome(TestCase):
-    @patch('game_files.game.random.random', return_value=0.2)
+    @patch('game_files.game_foe.random.random', return_value=0.2)
     @patch('builtins.print')
     def test_win_battle(self, _, __):
         character = {'XP': 0, 'Current HP': 10, 'Max HP': 20}
@@ -16,7 +16,7 @@ class TestCalculateBattleOutcome(TestCase):
         self.assertEqual(character['XP'], 10)
         self.assertEqual(character['Current HP'], 10)
 
-    @patch('game_files.game.random.random', return_value=0.8)
+    @patch('game_files.game_foe.random.random', return_value=0.8)
     @patch('builtins.print')
     def test_lose_battle_game_over(self, _, __):
         character = {'XP': 0, 'Current HP': 5, 'Max HP': 20}
@@ -27,7 +27,7 @@ class TestCalculateBattleOutcome(TestCase):
         self.assertFalse(result)
         self.assertLessEqual(character['Current HP'], 0)
 
-    @patch('game_files.game.random.random', return_value=0.4)
+    @patch('game_files.game_foe.random.random', return_value=0.4)
     @patch('builtins.print')
     def test_win_battle_no_level_up(self, _, __):
         character = {'XP': 5, 'Current HP': 15, 'Max HP': 20}

@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from game_files.game import decide_use_potion
+from game_files.game_progress import decide_use_potion
 
 
 class TestDecideUsePotion(TestCase):

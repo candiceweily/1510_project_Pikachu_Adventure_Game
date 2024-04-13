@@ -1,5 +1,7 @@
 from unittest import TestCase
-from game_files.game import move_character, make_character
+
+from game_files.game_character import make_character
+from game_files.game_navigation import move_character
 
 
 class TestMoveCharacter(TestCase):

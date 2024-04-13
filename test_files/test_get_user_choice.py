@@ -1,7 +1,9 @@
 from unittest import TestCase
 from unittest.mock import patch
 import io
-from game_files.game import get_user_choice, make_character
+
+from game_files.game_progress import get_user_choice
+from game_files.game_character import make_character
 
 
 class TestGetUserChoice(TestCase):

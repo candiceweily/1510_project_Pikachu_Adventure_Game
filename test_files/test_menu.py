@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from game_files.game import menu
+from game_files.game_menu import menu
 
 
 class TestMenu(TestCase):

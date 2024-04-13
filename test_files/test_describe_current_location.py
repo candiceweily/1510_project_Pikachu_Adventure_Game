@@ -1,7 +1,8 @@
 from unittest import TestCase
 from unittest.mock import patch
 import io
-from game_files.game import describe_current_location, make_board, make_character
+from game_files.game_character import make_character, describe_current_location
+from game_files.game_board import make_board
 
 
 class TestDescribeCurrentLocation(TestCase):
