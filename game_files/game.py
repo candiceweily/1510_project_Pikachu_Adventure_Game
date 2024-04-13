@@ -377,6 +377,13 @@ def run_math_quiz() -> int:
 
 
 def run_treasure_hunt(character: dict[str, str | int]) -> bool:
+    """
+    Offers the user a choice to dig for treasure, potentially increasing the potion count.
+
+    :param character: character is a non-empty dictionary
+    :precondition: character is a non-empty dictionary that contains location and attributes
+    :return: True if a treasure was found and dug up, False otherwise
+    """
     print("Pikachu has stumbled upon a suspicious-looking patch of ground.")
     decision = input("Do you want Pikachu to dig here? (1-yes/2-no): ").strip()
     while decision not in ['1', '2']:
