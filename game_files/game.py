@@ -327,11 +327,11 @@ def handle_regular_foe_encounter(character: dict[str: str | int]) -> bool:
 
 def check_for_encounters(character: dict[str: str | int]) -> bool:
     """
-    Check if the character encounters a foe and handle the encounter accordingly.
+    Check if the character encounters a challenge and handle the encounter accordingly.
 
     :param character: a non-empty dictionary
     :precondition: character is a non-empty dictionary that contains location and attributes
-    :postcondition: the character's state may be updated based on the battle outcome if an encounter occurs and print a
+    :postcondition: the character's state may be updated based on the outcome if an encounter occurs and print a
     useful message otherwise
     :return: True if the character survives the encounter or if no encounter occurs, False if the character is defeated
     and dies
