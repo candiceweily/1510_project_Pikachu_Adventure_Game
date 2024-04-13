@@ -46,3 +46,6 @@
 
 ## P.S.: All the other requirements are applied repeatedly throughout the entire project.
 
+## Flowchart Link
+(The original figma file link: 
+https://www.figma.com/file/4ZQ7XYD3eaLY5k4LAFgNsF/1510?type=whiteboard&node-id=0-1&t=lMSvvBxLOBcHLsXh-0)
