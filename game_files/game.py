@@ -87,20 +87,20 @@ def display_welcome_message() -> None:
     Print a welcome message and an ASCII art representation of Pikachu.
     """
     print("Welcome to Pikachu adventure game!")
-    print(r"""
-              \:.             .:/
-               \``._________.''/ 
-                \             / 
-         .--.--, / .':.   .':. \
-        /__:  /  | '::' . '::' |
-           / /   |`.   ._.   .'|
-          / /    |.'         '.|
-         /___-_-,|.\  \   /  /.|
-              `==|:=         =:|
-                 `.          .'
-                   :-._____-.:
-                  `''       `'' 
-    """)
+    print("\033[93m" + r"""
+                  \:.             .:/
+                   \``._________.''/ 
+                    \             / 
+             .--.--, / .':.   .':. \
+            /__:  /  | '::' . '::' |
+               / /   |`.   ._.   .'|
+              / /    |.'         '.|
+             /___-_-,|.\  \   /  /.|
+                  `==|:=         =:|
+                     `.          .'
+                       :-._____-.:
+                      `''       `'' 
+    """ + "\033[0m")
 
 
 def describe_current_location(board: dict[tuple[int, int]: str], character: dict[str: str | int]) -> None:
