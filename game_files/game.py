@@ -346,6 +346,24 @@ def check_for_encounters(character: dict[str: str | int]) -> bool:
         return True
 
 
+def run_math_quiz() -> int:
+    num1, num2 = random.randint(1, 10), random.randint(1, 10)
+    operation = random.choice(['+', '-', '*'])
+    correct_answer = eval(f"{num1} {operation} {num2}")
+    print(f"Solve this math problem: {num1} {operation} {num2}")
+    while True:
+        try:
+            player_answer = int(input("Enter your answer: "))
+            if player_answer == correct_answer:
+                print("Correct! Pikachu gains 5 bonus XP!")
+                return 5
+            else:
+                print("Oops! That's not right. The correct answer was:", correct_answer)
+                return 0
+        except ValueError:
+            print("Invalid number, try again.")
+
+
 def check_level_up(character: dict[str: str | int]) -> None:
     """
     Check if the character has enough XP to level up and update the character's level and ability.
