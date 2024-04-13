@@ -279,7 +279,7 @@ def decide_use_potion(character: dict[str: str | int]) -> None:
             character["Potions"] -= 1
             print(f"Potion used. Current HP: {character['Current HP']}. Potions left: {character['Potions']}.")
         elif use_potion != "2":
-            print("Invalid input. Please enter 1 or 2.")
+            print("Invalid input. You lost your chance to use potion")
 
 
 def calculate_battle_outcome(character: dict[str: str | int], win_chance: float, xp_change: int, hp_change: int) -> bool:
