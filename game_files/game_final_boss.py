@@ -1,4 +1,5 @@
 import random
+import time
 
 from game_files import BOSS_BATTLE_HP_REDUCE, BOSS_BATTLE_HIT_CHANCE
 from game_files.game_art import print_congratulations
@@ -26,14 +27,17 @@ def process_battle_round(character: dict[str: str | int], boss_hp: int, round_nu
 
     """
     print(f"Round {round_number}:")
+    time.sleep(1.5)
     if random.random() < BOSS_BATTLE_HIT_CHANCE:
         boss_hp -= BOSS_BATTLE_HP_REDUCE[0]
         print(f"You hit the boss! Boss's HP is now {boss_hp}.")
     else:
         print("You missed!")
+    time.sleep(1.5)
     if boss_hp > 0:
         character["Current HP"] -= BOSS_BATTLE_HP_REDUCE[1]
         print(f"The boss hit you! Your HP is now {character['Current HP']}.")
+        time.sleep(1.5)
         if character["Current HP"] <= 0:
             print("Game Over. Pikachu has fainted.")
             return boss_hp, False, round_number
