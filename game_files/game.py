@@ -10,27 +10,7 @@ from game_files.game_character import make_character, describe_current_location
 from game_files.game_navigation import display_map_with_character_position, validate_move, move_character
 from game_files.game_progress import get_user_choice, decide_use_potion
 from game_files.game_foe import handle_regular_foe_encounter, calculate_battle_outcome
-
-
-def display_welcome_message() -> None:
-    """
-    Print a welcome message and an ASCII art representation of Pikachu.
-    """
-    print("Welcome to Pikachu adventure game!")
-    print("\033[93m" + r"""
-                  \:.             .:/
-                   \``._________.''/ 
-                    \             / 
-             .--.--, / .':.   .':. \
-            /__:  /  | '::' . '::' |
-               / /   |`.   ._.   .'|
-              / /    |.'         '.|
-             /___-_-,|.\  \   /  /.|
-                  `==|:=         =:|
-                     `.          .'
-                       :-._____-.:
-                      `''       `'' 
-    """ + "\033[0m")
+from game_files.game_art import display_welcome_message, print_congratulations
 
 
 def check_for_encounters(character: dict[str: str | int]) -> bool:
@@ -130,27 +110,6 @@ def check_level_up(character: dict[str: str | int]) -> None:
         character["Current HP"] = character["Max HP"]
         character["Ability"] = ABILITY_BY_LEVEL[level]
         print(f'Pikachu has leveled up to Level {level + 1}! Ability upgrades to {character["Ability"]}.')
-
-
-def print_congratulations() -> None:
-    """
-    Print a congratulatory message and an ASCII art representation to celebrate defeating the final boss.
-    """
-    print("You've defeated the final boss!")
-    print("\033[93m" + r"""
-                   ___________
-                  '._==_==_=_.'
-                  .-\:      /-.
-                 | (|:.     |) |
-                  '-|:.     |-'
-                    \::.    /
-                     '::. .'
-                       ) (
-                     _.' '._
-                    `-------` 
-    """ + "\033[0m")
-
-    print("Pikachu is enjoying the triumph!")
 
 
 def process_battle_round(character: dict[str: str | int], boss_hp: int, round_number: int) -> tuple[int, bool, int]:
