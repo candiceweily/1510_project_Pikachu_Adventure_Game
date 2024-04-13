@@ -1,57 +1,12 @@
 import random
 import itertools
+
 from game_files import ROWS, COLUMNS, LEVEL_UP_EXPERIENCE, MAX_HP_BY_LEVEL, FOE_NAMES, WIN_CHANCE_BY_LEVEL
 from game_files import HP_CHANGE_BY_LEVEL, XP_CHANGE_BY_LEVEL, ABILITY_BY_LEVEL
 from game_files import BOSS_BATTLE_XP_NEED, BOSS_BATTLE_HP_REDUCE, BOSS_BATTLE_HIT_CHANCE
 
-
-def menu() -> str:
-    """
-    Display the main menu for the game and prompt the user to make a choice.
-
-    :postcondition: prompt the user to choose the desired option return the choice from the user
-    :return: the choice from the user as a string
-    """
-    while True:
-        print("\n--- Pikachu Adventure Game Menu ---")
-        print("1. Start Game")
-        print("2. Help")
-        print("3. Exit")
-        choice = input("Enter your choice (1, 2 or 3): ").strip()
-        if choice in ["1", "2", "3"]:
-            return choice
-        else:
-            print("Invalid choice. Please enter 1, 2, or 3.")
-
-
-def display_help() -> None:
-    """
-    Display the help section for the game.
-
-    :postcondition: print the help section for the game
-    """
-    print("\n--- Help & Information ---")
-    print("Welcome to Pikachu Adventure Game!")
-    print("Navigate Pikachu through various locations, battle foes, and level up.")
-    print("Make strategic decisions to ensure Pikachu's victory.")
-
-
-def make_board(rows: int, columns: int) -> dict[tuple[int, int]: str]:
-    """
-    Create a game board with random room descriptions.
-
-    This function generates a board for the game with the specified number of rows and columns. Each cell on the board
-    is assigned a random description from a predefined list.
-
-    :param rows: a positive integer
-    :param columns: a positive integer
-    :precondition: rows and columns must be positive integer
-    :postcondition: correctly create the game board which each key is a tuple and each value is a string description of
-    the room
-    :return: the game board as a dictionary
-    """
-    descriptions = ['Kanto', 'Johto', 'Hoenn', 'Sinnoh', 'Hisui']
-    return {(row, col): random.choice(descriptions) for row in range(rows) for col in range(columns)}
+from game_files.game_menu import menu, display_help
+from game_files.game_board import make_board
 
 
 def make_character() -> dict[str: str | int]:
