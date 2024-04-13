@@ -364,6 +364,23 @@ def run_math_quiz() -> int:
             print("Invalid number, try again.")
 
 
+def run_treasure_hunt(character: dict[str, str | int]) -> bool:
+    print("Pikachu has stumbled upon a suspicious-looking patch of ground.")
+    decision = input("Do you want Pikachu to dig here? (1-yes/2-no): ").strip()
+    while decision not in ['1', '2']:
+        decision = input("Invalid input. Enter 1 for yes or 2 for no: ").strip()
+    if decision == '1':
+        if random.choice([True, False]):
+            character['Potions'] += 1
+            print(f"Congratulations! Found a treasure! Potions now: {character['Potions']}.")
+            return True
+        else:
+            print("No treasure here. Better luck next time!")
+            return False
+    print("Pikachu decides not to dig.")
+    return False
+
+
 def check_level_up(character: dict[str: str | int]) -> None:
     """
     Check if the character has enough XP to level up and update the character's level and ability.
