@@ -36,4 +36,13 @@
 | `game`                               |           game.py            |
 | `main`                               |           game.py            |
 
-Each function plays a specific role in the game's logic, from managing game menus, handling game state updates, to processing battles and level progression.
+
+## Requirements
+
+| Requirements                          |        Path file        | Code lines |
+|---------------------------------------|:-----------------------:|------------|
+| Dictionary Comprehension              |      game_board.py      | 19         |
+| itertools.product                     |   game_navigation.py    | 20         |
+
+## P.S.: All the other requirements are applied repeatedly throughout the entire project.
+
