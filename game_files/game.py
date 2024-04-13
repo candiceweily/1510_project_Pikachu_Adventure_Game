@@ -12,6 +12,7 @@ from game_files.game_progress import get_user_choice, decide_use_potion
 from game_files.game_foe import handle_regular_foe_encounter, calculate_battle_outcome
 from game_files.game_art import display_welcome_message, print_congratulations
 from game_files.game_mini_games import run_math_quiz, run_treasure_hunt
+from game_files.game_level import check_level_up
 
 
 def check_for_encounters(character: dict[str: str | int]) -> bool:
@@ -39,30 +40,6 @@ def check_for_encounters(character: dict[str: str | int]) -> bool:
     else:
         print("It's a peaceful moment. Nothing special happens.")
     return True
-
-
-def check_level_up(character: dict[str: str | int]) -> None:
-    """
-    Check if the character has enough XP to level up and update the character's level and ability.
-
-    :param character: character is a non-empty dictionary
-    :precondition: character is a non-empty dictionary that contains location and attributes
-    :postcondition: check if Pikachu has enough XP to level up and correctly update the level and ability
-
-    >>> test_character = {'Level': 1, 'XP': 10, 'Max HP': 20, 'Current HP': 20}
-    >>> check_level_up(test_character)
-    Pikachu has leveled up to Level 2! Ability upgrades to Thunder Shower.
-    >>> test_character = {'Level': 2, 'XP':30, 'Max HP': 30, 'Current HP': 30}
-    >>> check_level_up(test_character)
-    Pikachu has leveled up to Level 3! Ability upgrades to Thunder Storm.
-    """
-    level = character["Level"]
-    if level < 3 and character["XP"] >= LEVEL_UP_EXPERIENCE[level - 1]:
-        character["Level"] += 1
-        character["Max HP"] = MAX_HP_BY_LEVEL[level]
-        character["Current HP"] = character["Max HP"]
-        character["Ability"] = ABILITY_BY_LEVEL[level]
-        print(f'Pikachu has leveled up to Level {level + 1}! Ability upgrades to {character["Ability"]}.')
 
 
 def process_battle_round(character: dict[str: str | int], boss_hp: int, round_number: int) -> tuple[int, bool, int]:
